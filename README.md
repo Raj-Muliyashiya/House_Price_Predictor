@@ -43,4 +43,4 @@ An End-to-End Machine Learning Project that predicts real estate prices in Benga
     ```
 
 ## 📊 Model Performance
-The Linear Regression model achieves approximately **84% accuracy** (R2 Score) on the test dataset.
+The Linear Regression model achieves approximately **84% accuracy** on the test dataset.
