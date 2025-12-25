@@ -1,11 +1,11 @@
-import streamlit as stl
+import streamlit as st
 import requests
 
 
-stl.title("Bangalore House Price Predictor")
+st.title("Bangalore House Price Predictor")
 
 base_url = requests.get('http://localhost:8000/get_locations')
+location_request = base_url.json()
+location_list = location_request['location']
 
-location_list = base_url.json()
-
-stl.write(detail)
+main_location = st.selectbox("Location" ,location_list,index=None)
