@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import joblib
 import json
 import numpy as np
@@ -7,7 +7,9 @@ from pydantic import BaseModel, Field
 
 
 model = joblib.load("model/house_price_pedictor.pkl")
-columns = json.load(open("model/columns.json"))["data_columns"]
+
+with open("model/columns.json", "r") as f:
+    columns = json.load(f)["data_columns"]
 
 app = FastAPI()
 
@@ -38,6 +40,8 @@ def predict(houseinput :houseinput):
         if loc in columns:
             loc_index = columns.index(loc)
             x[loc_index] = 1
+        else:
+            raise HTTPException(status_code=400, detail="Location not recognized")
 
         x_df = pd.DataFrame([x],columns=columns)
 
@@ -46,7 +50,17 @@ def predict(houseinput :houseinput):
         return {"the prediction is ":prediction}
 
     except Exception as e:
-        return {'Error': str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-
+@app.get('/get_locations')
+def get_locations():
+    try:
+        location_list = columns[3:]
+        if  not location_list:
+            raise HTTPException(status_code=404, detail="No Location Found")
+        
+        return { "location" : location_list }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))   
