@@ -24,3 +24,10 @@ sqrft = st.slider("Total Area (sqft)", min_value=300 , max_value=10000)
 if st.button("Predict Price"):
     if main_location is None:
         st.error("please select the location")
+    if main_location is not None:
+        inpud_data ={
+            'location' : main_location,
+            'bhk' : bhk,
+            'total_sqft' : sqrft,
+            'bath' : bath
+        }
