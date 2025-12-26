@@ -6,7 +6,7 @@ st.title("Bangalore House Price Predictor")
 
 base_url = requests.get('http://localhost:8000/get_locations')
 location_request = base_url.json()
-location_list = (location_request['location']) + ['Other']
+location_list = (location_request['location'])
 
 main_location = st.selectbox("Location" ,location_list,index=None, placeholder="Search for a location...")
 
@@ -24,10 +24,16 @@ sqrft = st.slider("Total Area (sqft)", min_value=300 , max_value=10000)
 if st.button("Predict Price"):
     if main_location is None:
         st.error("please select the location")
-    if main_location is not None:
+    else:
         inpud_data ={
             'location' : main_location,
             'bhk' : bhk,
             'total_sqft' : sqrft,
             'bath' : bath
         }
+
+        response = requests.post('http://localhost:8000/predict_home_price', json=inpud_data)
+        response = response.json()
+        
+        st.metric(label="Estimated Property Price" ,value=f"₹ {response["the prediction is "]:.2f} Lakhs")
+        st.balloons()
