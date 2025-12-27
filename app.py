@@ -6,7 +6,7 @@ st.title("Bangalore House Price Predictor")
 
 st.divider()    
 
-base_url = requests.get('https://house-price-predictor-0neu.onrender.com/get_locations')
+base_url = requests.get('https://house-price-predictor-2ws5.onrender.com/get_locations')
 location_request = base_url.json()
 location_list = (location_request['location'])
 
@@ -34,7 +34,7 @@ if st.button("Predict Price"):
             'bath' : bath
         }
         with st.spinner():
-            json_response = requests.post('https://house-price-predictor-0neu.onrender.com/predict_home_price', json=inpud_data)
+            json_response = requests.post('https://house-price-predictor-2ws5.onrender.com/predict_home_price', json=inpud_data)
             response = json_response.json()["the prediction is "]
 
             final_price = max(10.0, response)
