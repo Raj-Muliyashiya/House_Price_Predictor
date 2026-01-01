@@ -20,7 +20,7 @@ with col1:
 with col2:
     bath = st.number_input("Bath", min_value=1 , max_value=8)
 
-sqrft = st.slider("Total Area (sqft)", min_value=600 , max_value=5000)
+sqrft = st.slider("Total Area (sqft)", min_value=700 , max_value=5000)
 
 
 if st.button("Predict Price"):
